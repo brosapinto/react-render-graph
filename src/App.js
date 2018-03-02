@@ -5,6 +5,7 @@ import "./App.css";
 import D3Dagre from "./D3Dagre";
 import ReactGraph from "./ReactGraph";
 import Cytoscape from "./Cytoscape";
+import CytoscapeAuto from "./CytoscapeAuto";
 
 const Home = () => <h1>Home</h1>;
 
@@ -13,6 +14,7 @@ const Navigation = () => (
     <NavLink to="/svg">SVG</NavLink>
     <NavLink to="/htmlsvg">HTML + SVG</NavLink>
     <NavLink to="/canvas">Canvas</NavLink>
+    <NavLink to="/canvasauto">Canvas Auto</NavLink>
   </nav>
 );
 
@@ -29,6 +31,7 @@ const App = () => (
           <Route path="/svg" component={D3Dagre} />
           <Route path="/htmlsvg" component={ReactGraph} />
           <Route path="/canvas" component={Cytoscape} />
+          <Route path="/canvasauto" component={CytoscapeAuto} />
         </section>
       </React.Fragment>
     </Router>
