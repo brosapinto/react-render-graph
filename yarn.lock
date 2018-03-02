@@ -1947,7 +1947,6 @@ d@1:
   dependencies:
     es5-ext "^0.10.9"
 
-<<<<<<< HEAD
 dagre-d3@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/dagre-d3/-/dagre-d3-0.6.1.tgz#a1ac34ce8844c27842029ec661c3cb4a0bad0b45"
@@ -1957,10 +1956,7 @@ dagre-d3@^0.6.1:
     graphlib "^2.1.5"
     lodash "^4.17.4"
 
-dagre@^0.8.1:
-=======
-dagre@^0.8.2:
->>>>>>> 0e547fa... Creating simple graph using React JSON Graph and Dagre
+dagre@^0.8.1, dagre@^0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/dagre/-/dagre-0.8.2.tgz#755b79f4d5499d63cf74c3368fb08add93eceafe"
   dependencies:
@@ -5400,7 +5396,10 @@ react-error-overlay@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.0.tgz#d198408a85b4070937a98667f500c832f86bd5d4"
 
-<<<<<<< HEAD
+react-json-graph@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-json-graph/-/react-json-graph-2.0.2.tgz#2ff3e0c513e3728a9818a241bd510883f8092a67"
+
 react-router-dom@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -5423,11 +5422,6 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
-=======
-react-json-graph@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-json-graph/-/react-json-graph-2.0.2.tgz#2ff3e0c513e3728a9818a241bd510883f8092a67"
->>>>>>> 0e547fa... Creating simple graph using React JSON Graph and Dagre
 
 react-scripts@1.1.1:
   version "1.1.1"

@@ -1,51 +1,52 @@
 import React, { Component } from "react";
 import Graph from "react-json-graph";
 import dagre from "dagre";
+import graphFactory from "./graph-factory";
 
 class ReactGraph extends Component {
-  nodes = [];
-  edges = [];
+  state = {
+    nodes: [],
+    edges: []
+  };
 
-  render() {
-    const graph = new dagre.graphlib.Graph();
+  /**
+   * From Dagre Nodes to ReactJSONGraph nodes
+   * @param {Object} graph Dagre graph instance
+   * @returns {Array} List of nodes -- [{id, label, position: {x, y}, ...}]
+   */
+  static convertNodes = graph => {
+    const nodes = graph.nodes();
 
-    graph.setGraph({}).setDefaultEdgeLabel(() => ({}));
+    return nodes
+      .map(id => ({ id, ...graph.node(id) }))
+      .map(({ id, label, x, y }) => ({
+        id,
+        label,
+        position: { x, y }
+      }));
+  };
 
-    graph
-      .setNode("A", { label: "A", width: 160, height: 36 })
-      .setNode("C", { label: "C", width: 160, height: 36 })
-      .setNode("B", { label: "B", width: 160, height: 36 })
-      .setNode("D", { label: "D", width: 160, height: 36 })
-      .setNode("E", { label: "E", width: 160, height: 36 })
-      .setNode("F", { label: "F", width: 160, height: 36 })
-      .setNode("G", { label: "G", width: 160, height: 36 })
-      .setNode("H", { label: "H", width: 160, height: 36 });
+  /**
+   * From Dagre Edges to ReactJSONGraph edges
+   * @param {Array} edges List of Dagre edges
+   * @returns {Array} List of edges -- [{source, target}, ...]
+   */
+  static convertEdges = edges =>
+    edges.map(({ v: source, w: target }) => ({ source, target }));
 
-    graph
-      .setEdge("A", "B")
-      .setEdge("A", "C")
-      .setEdge("B", "G")
-      .setEdge("B", "H")
-      .setEdge("C", "D")
-      .setEdge("C", "E")
-      .setEdge("E", "F")
-      .setEdge("E", "A");
-
+  componentDidMount() {
+    const graph = graphFactory();
     dagre.layout(graph);
 
-    this.nodes = graph.nodes().map(id => {
-      const node = graph.node(id);
-      return {
-        id,
-        label: node.label,
-        position: { x: node.x, y: node.y }
-      };
+    // convert nodes and edges to something
+    this.setState({
+      nodes: ReactGraph.convertNodes(graph),
+      edges: ReactGraph.convertEdges(graph.edges())
     });
+  }
 
-    this.edges = graph.edges().map(({ v: source, w: target }) => ({
-      source,
-      target
-    }));
+  render() {
+    const { nodes, edges } = this.state;
 
     return (
       <React.Fragment>
@@ -53,8 +54,8 @@ class ReactGraph extends Component {
           width={900}
           height={600}
           json={{
-            nodes: this.nodes,
-            edges: this.edges,
+            nodes,
+            edges,
             isStatic: true,
             isVertical: true,
             isDirected: true
