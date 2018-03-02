@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 import cytoscape from "cytoscape";
+import graphFactory from "./graph-factory";
+import dagre from "dagre";
 
-import Canvas from "./Canvas";
+class Cytoscape extends Component {
+  componentDidMount() {
+    const graph = graphFactory();
+    dagre.layout(graph);
 
-class Graph extends Component {
-  state = {
-    id: "Graph"
-  };
-
-  componentWillReceiveProps(nextProps) {
-    const { graph } = nextProps;
-    if (!graph) {
-      return;
-    }
     const cy = cytoscape({
-      container: document.getElementById("Graph"),
+      container: document.getElementById("canvas"),
 
       boxSelectionEnabled: false,
       autounselectify: true,
@@ -53,6 +48,7 @@ class Graph extends Component {
         position: { x: node.x, y: node.y }
       });
     });
+
     let i = 1;
     graph.edges().forEach(({ v: source, w: target }) => {
       cy.add({
@@ -64,19 +60,22 @@ class Graph extends Component {
         }
       });
     });
+
     cy.on("click", "node", function(evt) {
       var node = evt.target;
       console.log("clicked " + node.id());
     });
+
     const layout = cy.layout({
       name: "preset"
     });
+
     layout.run();
   }
 
   render() {
-    return <Canvas id={this.state.id} />;
+    return <div style={{ height: "750px", width: "750px" }} id="canvas" />;
   }
 }
 
-export default Graph;
+export default Cytoscape;

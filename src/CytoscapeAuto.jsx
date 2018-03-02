@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import cytoscape from "cytoscape";
+import graphFactory from "./graph-factory";
 import cytoscapeDagre from "cytoscape-dagre";
-import Canvas from "./Canvas";
+import dagre from "dagre";
 
 cytoscape.use(cytoscapeDagre);
 
-class GraphAuto extends Component {
-  state = {
-    id: "GraphAuto"
-  };
-  componentWillReceiveProps(nextProps) {
-    const { graph } = nextProps;
-    if (!graph) {
-      return;
-    }
+class CytoscapeAuto extends Component {
+  componentDidMount() {
+    const graph = graphFactory();
+    dagre.layout(graph);
 
     const nodes = graph.nodes().map(id => {
       const node = graph.node(id);
@@ -33,7 +29,7 @@ class GraphAuto extends Component {
     }));
 
     const cy = cytoscape({
-      container: document.getElementById("GraphAuto"),
+      container: document.getElementById("canvas"),
 
       boxSelectionEnabled: false,
       autounselectify: true,
@@ -78,8 +74,8 @@ class GraphAuto extends Component {
   }
 
   render() {
-    return <Canvas id={this.state.id} />;
+    return <div style={{ height: "750px", width: "750px" }} id="canvas" />;
   }
 }
 
-export default GraphAuto;
+export default CytoscapeAuto;
