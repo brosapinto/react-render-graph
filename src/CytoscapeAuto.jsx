@@ -33,6 +33,8 @@ class CytoscapeAuto extends Component {
 
       boxSelectionEnabled: false,
       autounselectify: true,
+      minZoom: 1,
+      maxZoom: 2,
 
       layout: {
         name: "dagre"
@@ -42,7 +44,7 @@ class CytoscapeAuto extends Component {
         {
           selector: "node",
           style: {
-            content: "data(id)",
+            content: "data(label)",
             "text-opacity": 0.5,
             "text-valign": "center",
             "text-halign": "right",
@@ -74,7 +76,7 @@ class CytoscapeAuto extends Component {
   }
 
   render() {
-    return <div style={{ height: "750px", width: "750px" }} id="canvas" />;
+    return <div style={{ height: "750px", width: "1200px" }} id="canvas" />;
   }
 }
 

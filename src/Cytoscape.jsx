@@ -13,15 +13,23 @@ class Cytoscape extends Component {
 
       boxSelectionEnabled: false,
       autounselectify: true,
+      zoom: 2,
+      minZoom: 1,
+      maxZoom: 2,
+
       style: [
         {
           selector: "node",
           style: {
-            content: "data(id)",
+            content: "data(label)",
             "text-opacity": 0.5,
             "text-valign": "center",
-            "text-halign": "right",
-            "background-color": "#11479e"
+            "text-halign": "center",
+            "background-color": "white",
+
+            shape: "roundrectangle",
+            "border-style": "dashed",
+            "border-width": "2px"
           }
         },
 
@@ -32,7 +40,12 @@ class Cytoscape extends Component {
             width: 4,
             "target-arrow-shape": "triangle",
             "line-color": "#9dbaea",
-            "target-arrow-color": "#9dbaea"
+            "target-arrow-color": "#9dbaea",
+            "source-arrow-shape": "circle",
+            "target-arrow-shape": "circle"
+
+            // label: "mylabel"
+            // "edge-distances": "node-position"
           }
         }
       ]
@@ -44,7 +57,7 @@ class Cytoscape extends Component {
         group: "nodes",
         // data: { weight: 75 },
         // data: { id, width: node.width, height: node.height },
-        data: { id },
+        data: { id, label: node.label },
         position: { x: node.x, y: node.y }
       });
     });
@@ -74,7 +87,7 @@ class Cytoscape extends Component {
   }
 
   render() {
-    return <div style={{ height: "750px", width: "750px" }} id="canvas" />;
+    return <div style={{ height: "750px", width: "1200px" }} id="canvas" />;
   }
 }
 
