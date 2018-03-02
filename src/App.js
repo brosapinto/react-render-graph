@@ -12,19 +12,27 @@ class App extends Component {
     graph.setGraph({}).setDefaultEdgeLabel(() => ({}));
 
     graph
-      .setNode(0, { label: "Alice", width: 160, height: 36 })
-      .setNode(1, { label: "Bob", width: 160, height: 36 })
-      .setNode(2, { label: "Luke", width: 160, height: 36 })
-      .setNode(3, { label: "John", width: 160, height: 36 });
+      .setNode("A", { label: "A", width: 160, height: 36 })
+      .setNode("C", { label: "C", width: 160, height: 36 })
+      .setNode("B", { label: "B", width: 160, height: 36 })
+      .setNode("D", { label: "D", width: 160, height: 36 })
+      .setNode("E", { label: "E", width: 160, height: 36 })
+      .setNode("F", { label: "F", width: 160, height: 36 })
+      .setNode("G", { label: "G", width: 160, height: 36 })
+      .setNode("H", { label: "H", width: 160, height: 36 });
 
     graph
-      .setEdge(0, 1)
-      .setEdge(1, 2)
-      .setEdge(1, 1)
-      .setEdge(2, 0)
-      .setEdge(0, 3);
+      .setEdge("A", "B")
+      .setEdge("A", "C")
+      .setEdge("B", "G")
+      .setEdge("B", "H")
+      .setEdge("C", "D")
+      .setEdge("C", "E")
+      .setEdge("E", "F")
+      .setEdge("E", "A");
 
     dagre.layout(graph);
+
     this.nodes = graph.nodes().map(id => {
       const node = graph.node(id);
       return {
@@ -42,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         <Graph
-          width={600}
+          width={900}
           height={600}
           json={{
             nodes: this.nodes,
