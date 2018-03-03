@@ -1,0 +1,486 @@
+{
+  "init": "iscf",
+  "steps": [
+    {
+      "id": "iafcco",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "idoa"
+      }
+    },
+    {
+      "id": "iacnco",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "idoa"
+      }
+    },
+    {
+      "id": "iacncs",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "idsa"
+      }
+    },
+    {
+      "id": "iacnct",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "idta"
+      }
+    },
+    {
+      "id": "iacncv",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "idva"
+      }
+    },
+    {
+      "id": "icm",
+      "transitions": {
+        "trf": "iumce",
+        "ts": "ics",
+        "tcr": "iruii",
+        "terr": "ih",
+        "ttout": "ih"
+      }
+    },
+    {
+      "id": "icmb",
+      "transitions": {
+        "trf": "iumce",
+        "ts": "icsb",
+        "tcr": "ivuinc",
+        "terr": "ih",
+        "ttout": "ih"
+      }
+    },
+    {
+      "id": "icmi",
+      "transitions": {
+        "trf": "iumce",
+        "ts": "icsi",
+        "terr": "ih",
+        "ttout": "ivuinc"
+      }
+    },
+    {
+      "id": "icmi",
+      "transitions": {
+        "trf": "iumce",
+        "ts": "icsi",
+        "tcr": "ivuinc",
+        "terr": "ih",
+        "ttout": "ih"
+      }
+    },
+    {
+      "id": "icp",
+      "transitions": {
+        "trf": "iumce",
+        "digits": "icm",
+        "failure": "ih",
+        "ttout": "ih",
+        "terr": "ih"
+      }
+    },
+    {
+      "id": "icpbb",
+      "transitions": {
+        "trf": "iumce",
+        "digits": "icmb",
+        "failure": "ih",
+        "ttout": "ih",
+        "terr": "ih"
+      }
+    },
+    {
+      "id": "icpi",
+      "transitions": {
+        "trf": "iumce",
+        "digits": "icmi",
+        "failure": "ih",
+        "ttout": "ih",
+        "terr": "ih"
+      }
+    },
+    {
+      "id": "icpi",
+      "transitions": {
+        "trf": "iumce",
+        "digits": "icmi",
+        "failure": "ih",
+        "ttout": "ih",
+        "terr": "ih"
+      }
+    },
+    {
+      "id": "ics",
+      "transitions": {
+        "trf": "iumce",
+        "case": "ivui",
+        "failure": "irui",
+        "ttout": "irui",
+        "terr": "irui"
+      }
+    },
+    {
+      "id": "icsb",
+      "transitions": {
+        "trf": "iumce",
+        "case": "ivui",
+        "failure": "ivuinc",
+        "ttout": "ivuinc",
+        "terr": "ivuinc"
+      }
+    },
+    {
+      "id": "icsi",
+      "transitions": {
+        "trf": "iumce",
+        "case": "ivuii",
+        "failure": "iruii",
+        "ttout": "iruii",
+        "terr": "iruii"
+      }
+    },
+    {
+      "id": "icsi",
+      "transitions": {
+        "trf": "iumce",
+        "case": "ivuii",
+        "failure": "ivuinc",
+        "ttout": "ivuinc",
+        "terr": "ivuinc"
+      }
+    },
+    {
+      "id": "icb",
+      "transitions": {
+        "trf": "igsoch",
+        "blacklisted": "iebe",
+        "not-blacklisted": "ilc"
+      }
+    },
+    {
+      "id": "icmf",
+      "transitions": {
+        "visibility": "idva",
+        "testing": "idta",
+        "security": "idsa",
+        "other": "idoa",
+        "terr": "icmf",
+        "ttout": "icmf",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icmf",
+      "transitions": {
+        "visibility": "idva",
+        "testing": "idta",
+        "security": "idsa",
+        "other": "idoa",
+        "terr": "ih",
+        "ttout": "ih",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icmns",
+      "transitions": {
+        "visibility": "iacncv",
+        "testing": "iacnct",
+        "security": "iacncs",
+        "other": "iacnco",
+        "terr": "icmf",
+        "ttout": "icmf",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icmpf",
+      "transitions": {
+        "product": "icmf",
+        "terr": "icmpf",
+        "ttout": "idoa",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icmpf",
+      "transitions": {
+        "product": "icmf",
+        "terr": "ih",
+        "ttout": "ih",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icpsnc",
+      "transitions": {
+        "product": "icmns",
+        "agent": "iafcco",
+        "terr": "iafcco",
+        "ttout": "iacnco",
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "icstep",
+      "transitions": {
+        "trf": "iumce",
+        "case": "irui",
+        "repeat": "icsbb",
+        "terr": "icsbb",
+        "ttout": "ivuinc"
+      }
+    },
+    {
+      "id": "icsbb",
+      "transitions": {
+        "trf": "iumce",
+        "case": "irui",
+        "repeat": "ih",
+        "terr": "ih",
+        "ttout": "ivuinc"
+      }
+    },
+    {
+      "id": "icem",
+      "transitions": {
+        "contact_match": "icce",
+        "no-match": "iccemm"
+      }
+    },
+    {
+      "id": "iccemm",
+      "transitions": {
+        "tok": "iecie",
+        "trf": "igsoch"
+      }
+    },
+    {
+      "id": "icce",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "iecie"
+      }
+    },
+    {
+      "id": "iceoch",
+      "transitions": {
+        "tok": "iecime"
+      }
+    },
+    {
+      "id": "idoa",
+      "transitions": {
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "idsa",
+      "transitions": {
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "idta",
+      "transitions": {
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "idva",
+      "transitions": {
+        "trf": "iumce"
+      }
+    },
+    {
+      "id": "ieft",
+      "transitions": {
+        "tok": "ieme"
+      }
+    },
+    {
+      "id": "iebe",
+      "transitions": {
+        "tok": "ih"
+      }
+    },
+    {
+      "id": "iecie",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "igc"
+      }
+    },
+    {
+      "id": "iecime",
+      "transitions": {
+        "tok": "iumce"
+      }
+    },
+    {
+      "id": "ieme",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "igrs"
+      }
+    },
+    {
+      "id": "igc",
+      "transitions": {
+        "trf": "iumce",
+        "contact": "iwg",
+        "failure": "iwgnn",
+        "ttout": "iwgnn",
+        "terr": "iwgnn"
+      }
+    },
+    {
+      "id": "igrs",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "icb"
+      }
+    },
+    {
+      "id": "igsoch",
+      "transitions": {
+        "tok": "ilcoch"
+      }
+    },
+    {
+      "id": "ih",
+      "transitions": {}
+    },
+    {
+      "id": "illp",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "icem"
+      }
+    },
+    {
+      "id": "ilpoch",
+      "transitions": {
+        "tok": "iceoch"
+      }
+    },
+    {
+      "id": "ilc",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "illp"
+      }
+    },
+    {
+      "id": "ilcoch",
+      "transitions": {
+        "tok": "ilpoch"
+      }
+    },
+    {
+      "id": "irui",
+      "transitions": {
+        "trf": "iumce",
+        "ttout": "ivuinc",
+        "tok": "icp"
+      }
+    },
+    {
+      "id": "irui",
+      "transitions": {
+        "trf": "iumce",
+        "ttout": "ivuinc",
+        "tok": "icpbb"
+      }
+    },
+    {
+      "id": "iruii",
+      "transitions": {
+        "trf": "iumce",
+        "ttout": "ivuinc",
+        "tok": "icpi"
+      }
+    },
+    {
+      "id": "iruii",
+      "transitions": {
+        "trf": "iumce",
+        "ttout": "ivuinc",
+        "tok": "icpi"
+      }
+    },
+    {
+      "id": "iscf",
+      "transitions": {
+        "trf": "igsoch",
+        "tok": "igrs"
+      }
+    },
+    {
+      "id": "iumce",
+      "transitions": {
+        "tok": "ieft"
+      }
+    },
+    {
+      "id": "ivui",
+      "transitions": {
+        "trf": "iumce",
+        "case_id": "iafcco",
+        "failure": "icmpf",
+        "ttout": "icmpf",
+        "terr": "icmpf"
+      }
+    },
+    {
+      "id": "ivui",
+      "transitions": {
+        "trf": "iumce",
+        "case_id": "iafcco",
+        "failure": "icmpf",
+        "ttout": "icmpf",
+        "terr": "icmpf"
+      }
+    },
+    {
+      "id": "ivuii",
+      "transitions": {
+        "trf": "iumce",
+        "case_id": "iafcco",
+        "failure": "icmpf",
+        "ttout": "icmpf",
+        "terr": "icmpf"
+      }
+    },
+    {
+      "id": "ivuinc",
+      "transitions": {
+        "trf": "iumce",
+        "inci": "icpsnc",
+        "failure": "icmpf",
+        "ttout": "icmpf",
+        "terr": "icmpf"
+      }
+    },
+    {
+      "id": "iwg",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "icstep"
+      }
+    },
+    {
+      "id": "iwgnn",
+      "transitions": {
+        "trf": "iumce",
+        "tok": "icstep"
+      }
+    }
+  ]
+}

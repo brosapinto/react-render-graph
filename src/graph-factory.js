@@ -1,4 +1,6 @@
 import dagre from "dagre";
+import sr from "./graphs/sr.json";
+import ix from "./graphs/ix.json";
 
 /**
  * Creates a Directed Graph using Dagre
@@ -6,27 +8,64 @@ import dagre from "dagre";
  * @returns {Object} Dagre Graph instance
  */
 const graphFactory = () => {
-  const graph = new dagre.graphlib.Graph();
+  const graph = new dagre.graphlib.Graph({
+    multigraph: true,
+    compound: false
+  });
 
-  graph.setGraph({}).setDefaultEdgeLabel(() => ({}));
-
+  // https://github.com/dagrejs/dagre/wiki#configuring-the-layout
+  // https://github.com/dagrejs/graphlib/wiki
   graph
-    .setNode("A", { label: "A", width: 160, height: 36 })
-    .setNode("C", { label: "C", width: 160, height: 36 })
-    .setNode("B", { label: "B", width: 160, height: 36 })
-    .setNode("D", { label: "D", width: 160, height: 36 })
-    .setNode("E", { label: "E", width: 160, height: 36 })
-    .setNode("F", { label: "F", width: 160, height: 36 })
-    .setNode("G", { label: "G", width: 160, height: 36 })
-    .setNode("H", { label: "H", width: 160, height: 36 })
-    .setEdge("A", "B")
-    .setEdge("A", "C")
-    .setEdge("B", "G")
-    .setEdge("B", "H")
-    .setEdge("C", "D")
-    .setEdge("C", "E")
-    .setEdge("E", "F")
-    .setEdge("E", "A");
+    .setGraph({
+      rankdir: "TB",
+      // align: "UL",
+      ranker: "network-simplex" // network-simplex, tight-tree or longest-path
+      // nodesep: 200
+      // edgesep: 10
+      // ranksep: 70
+    })
+    .setDefaultEdgeLabel(() => ({}));
+
+  // const steps = ix.steps;
+  const steps = sr.steps;
+  steps.forEach(s => {
+    graph.setNode(s.id, {
+      label: s.id,
+      width: 100,
+      height: 50
+    });
+  });
+
+  let edgeId = 0;
+  steps.forEach(s => {
+    Object.keys(s.transitions).forEach(t => {
+      graph.setEdge({
+        v: s.id,
+        w: s.transitions[t],
+        name: t,
+        minlen: 2
+        // weight
+      });
+    });
+  });
+
+  // graph
+  // .setNode("A", { label: "AAAAA", width: 160, height: 36 })
+  // .setNode("C", { label: "C", width: 160, height: 36 })
+  // .setNode("B", { label: "B", width: 160, height: 36 })
+  // .setNode("D", { label: "D", width: 160, height: 36 })
+  // .setNode("E", { label: "E", width: 160, height: 36 })
+  // .setNode("F", { label: "F", width: 160, height: 36 })
+  // .setNode("G", { label: "G", width: 160, height: 36 })
+  // .setNode("H", { label: "H", width: 160, height: 36 })
+  // .setEdge("A", "B")
+  // .setEdge("A", "C")
+  // .setEdge("B", "G")
+  // .setEdge("B", "H")
+  // .setEdge("C", "D")
+  // .setEdge("C", "E")
+  // .setEdge("E", "F")
+  // .setEdge("E", "A");
 
   // .setNode("0", { label: "ROOT", class: "type-TOP" })
   // .setNode("1", { label: "step 01", class: "type-S" })
