@@ -34,11 +34,18 @@ class Cytoscape extends Component {
             "border-width": "2px"
           }
         },
-
+        {
+          // selector: "node:selected",
+          selector: "node.selected",
+          style: {
+            "border-style": "double",
+            "border-color": "green"
+          }
+        },
         {
           selector: "edge",
           style: {
-            "curve-style": "bezier",
+            "curve-style": "bezier", // bezier, unbundled-bezier, segments
             // width: 4,
             "line-color": "#9dbaea",
             "target-arrow-color": "#9dbaea",
@@ -51,11 +58,19 @@ class Cytoscape extends Component {
             "text-background-shape": "roundrectangle"
             // "edge-distances": "node-position"
           }
+        },
+        {
+          // selector: "node:selected",
+          selector: "edge.selected",
+          style: {
+            "line-color": "green",
+            "target-arrow-color": "green"
+          }
         }
       ]
     });
 
-    const grid = a => a - a % 80;
+    // const grid = a => a - a % 80;
 
     graph.nodes().forEach(id => {
       const { x, y, label, width, height } = graph.node(id);
@@ -64,6 +79,9 @@ class Cytoscape extends Component {
         group: "nodes",
         // grabbable: false,
         // locked: true,
+        selected: false, // whether the element is selected (default false)
+        selectable: true, // whether the selection state is mutable (default true)
+
         // data: { weight: 75 },
         // data: { id, width: node.width, height: node.height },
         // data: { id, label: node.label, weight: node.weight || 10 },
@@ -75,7 +93,7 @@ class Cytoscape extends Component {
 
     graph.edges().forEach(edge => {
       const { v: source, w: target, name, label } = edge;
-      debugger;
+      // debugger;
       cy.add({
         group: "edges",
         data: {
@@ -86,21 +104,43 @@ class Cytoscape extends Component {
       });
     });
 
+    const selectedClass = "selected";
     cy.on("click", "node", function(evt) {
-      var node = evt.target;
-      console.log("node " + node.cy());
+      // var node = cy.getElementById(evt.target.id());
+      // console.log("click node " + node.id());
+      // const isSelected = node.selected();
+      // node.select();
+      const node = evt.target;
+      const isSelected = node.hasClass(selectedClass);
+      if (isSelected) {
+        node.removeClass(selectedClass);
+        node.connectedEdges().forEach(e => e.removeClass(selectedClass));
+      } else {
+        node.addClass(selectedClass);
+        node.connectedEdges().forEach(e => e.addClass(selectedClass));
+      }
     });
 
-    cy.on("click", "edge", function(evt) {
-      var edge = evt.target;
-      debugger;
-      console.log("edge ", edge);
-    });
+    // cy.on("cxttap", "node", function(evt) {
+    //   var node = evt.target;
+    //   console.log("cxttap node " + node.cy());
+    // });
+
+    // cy.on("click", "edge", function(evt) {
+    //   var edge = evt.target;
+    //   debugger;
+    //   console.log("click edge ", edge);
+    // });
+    // cy.on("cxttap", "edge", function(evt) {
+    //   var edge = evt.target;
+    //   debugger;
+    //   console.log("cxttap edge ", edge);
+    // });
 
     const layout = cy.layout({
-      name: "preset"
+      name: "preset",
+      selectable: true
     });
-
     layout.run();
   }
 
