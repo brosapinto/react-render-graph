@@ -1,0 +1,118 @@
+{
+  "init": "iscf",
+  "steps": [
+    {
+      "id": "icb",
+      "transitions": {
+        "trf": "illpoch",
+        "tb": "iebe",
+        "tnb": "illp"
+      }
+    },
+    {
+      "id": "icce",
+      "transitions": {
+        "trf": "icceoch",
+        "tok": "iecie"
+      }
+    },
+    {
+      "id": "icceoch",
+      "transitions": {
+        "tok": "iecime"
+      }
+    },
+    {
+      "id": "ieft",
+      "transitions": {
+        "tok": "ieme"
+      }
+    },
+    {
+      "id": "iebe",
+      "transitions": {
+        "trf": "ih",
+        "tok": "ih"
+      }
+    },
+    {
+      "id": "iecie",
+      "transitions": {
+        "trf": "iecime",
+        "tok": "ihc"
+      }
+    },
+    {
+      "id": "iecime",
+      "transitions": {
+        "tok": "iumce"
+      }
+    },
+    {
+      "id": "ieme",
+      "transitions": {}
+    },
+    {
+      "id": "igrs",
+      "transitions": {
+        "trf": "igrsoch",
+        "tok": "icb"
+      }
+    },
+    {
+      "id": "igrsoch",
+      "transitions": {
+        "tok": "illpoch"
+      }
+    },
+    {
+      "id": "ihc",
+      "transitions": {
+        "trf": "iecime"
+      }
+    },
+    {
+      "id": "ih",
+      "transitions": {}
+    },
+    {
+      "id": "illp",
+      "transitions": {
+        "trf": "illpoch",
+        "tok": "ilc"
+      }
+    },
+    {
+      "id": "illpoch",
+      "transitions": {
+        "tok": "ilcoch"
+      }
+    },
+    {
+      "id": "ilc",
+      "transitions": {
+        "trf": "ilcoch",
+        "tok": "icce"
+      }
+    },
+    {
+      "id": "ilcoch",
+      "transitions": {
+        "tok": "icceoch"
+      }
+    },
+    {
+      "id": "iscf",
+      "transitions": {
+        "trf": "igrsoch",
+        "tok": "igrs"
+      }
+    },
+    {
+      "id": "iumce",
+      "transitions": {
+        "tok": "ieft"
+      }
+    }
+  ]
+}
