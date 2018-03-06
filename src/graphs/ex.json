@@ -1,0 +1,137 @@
+{
+  "init": "iinbd",
+  "steps": [
+    {
+      "id": "iinbd",
+      "transitions": {
+        "tok": "iplgr"
+      }
+    },
+    {
+      "id": "iplgr",
+      "transitions": {
+        "tok": "isfdcv"
+      }
+    },
+    {
+      "id": "isfdcv",
+      "transitions": {
+        "tok": "ibh"
+      }
+    },
+    {
+      "id": "ibh",
+      "transitions": {
+        "tin": "iivrss",
+        "tout": "iivipbh"
+      }
+    },
+
+    {
+      "id": "isfdcao",
+      "transitions": {
+        "tok": "iaao"
+      }
+    },
+    {
+      "id": "iaao",
+      "transitions": {
+        "ttout": "iast"
+      }
+    },
+    {
+      "id": "iast",
+      "transitions": {
+        "ttout": "ivm"
+      }
+    },
+
+    {
+      "id": "iivrec",
+      "transitions": {
+        "ty": "iiivrc",
+        "tn": "iivipec"
+      }
+    },
+    {
+      "id": "iiivrc",
+      "transitions": {
+        "tok": "icf"
+      }
+    },
+    {
+      "id": "icf",
+      "transitions": {
+        "ty": "iaco",
+        "tn": "iasupt"
+      }
+    },
+    {
+      "id": "iaco",
+      "transitions": {
+        "tout": "iasupt"
+      }
+    },
+
+    {
+      "id": "iivipec",
+      "transitions": {
+        "ty": "ip1",
+        "tn": "ip2"
+      }
+    },
+    {
+      "id": "ip1",
+      "transitions": {
+        "tok": "iasupt"
+      }
+    },
+    {
+      "id": "ip2",
+      "transitions": {
+        "tok": "iasupt"
+      }
+    },
+
+    {
+      "id": "iasupt",
+      "transitions": {
+        "tout2m": "ip+1",
+        "tout15m": "ivm"
+      }
+    },
+    {
+      "id": "ip+1",
+      "transitions": {
+        "tok": "iasupt"
+      }
+    },
+
+    {
+      "id": "iivipbh",
+      "transitions": {
+        "ty": "iaaht",
+        "tn": "ivm"
+      }
+    },
+    {
+      "id": "iaaht",
+      "transitions": {
+        "ttout": "ivm"
+      }
+    },
+
+    {
+      "id": "iivrss",
+      "transitions": {
+        "tsls": "isfdcao",
+        "tsupp": "iivrec"
+      }
+    },
+
+    {
+      "id": "ivm",
+      "transitions": {}
+    }
+  ]
+}
