@@ -1,6 +1,7 @@
 import dagre from "dagre";
 import sr from "./graphs/sr.json";
 import ix from "./graphs/ix.json";
+import ex from "./graphs/ex.json";
 
 /**
  * Creates a Directed Graph using Dagre
@@ -26,8 +27,13 @@ const graphFactory = () => {
     })
     .setDefaultEdgeLabel(() => ({}));
 
-  // const steps = ix.steps;
-  const steps = sr.steps;
+  const origGraph = ex;
+  // const origGraph = ix;
+  // const origGraph = sr;
+
+  const initStep = origGraph.init;
+  const steps = origGraph.steps;
+
   steps.forEach(s => {
     graph.setNode(s.id, {
       label: s.id,
@@ -36,7 +42,7 @@ const graphFactory = () => {
     });
   });
 
-  let edgeId = 0;
+  // let edgeId = 0;
   steps.forEach(s => {
     Object.keys(s.transitions).forEach(t => {
       graph.setEdge({
