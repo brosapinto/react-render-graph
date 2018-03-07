@@ -20,12 +20,31 @@ const zoom = d3
     );
   });
 
+const graph = graphFactory();
+graph.nodes().forEach(id => {
+  const node = graph.node(id);
+  node.rx = node.ry = 5; // rounded corners
+});
+
+const randomInt = max => Math.floor(Math.random() * max);
+const randomNode = () => {
+  const nodes = graph.nodes();
+  const randomIdx = randomInt(nodes.length);
+  const randomNodeName = nodes[randomIdx];
+  return graph.node(randomNodeName);
+};
+
+let counter = 0;
+
 class D3Dagre extends Component {
   constructor() {
     super();
+
+    // this.state = { graph };
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
     this.addNode = this.addNode.bind(this);
+    this.removeNode = this.removeNode.bind(this);
   }
 
   zoomIn() {
@@ -38,24 +57,43 @@ class D3Dagre extends Component {
     zoom.scaleBy(svg, 0.9);
   }
 
+  removeNode() {}
   addNode() {
-    console.log("addNode");
-  }
-
-  componentDidMount() {
-    const graph = graphFactory();
-    graph.nodes().forEach(id => {
-      const node = graph.node(id);
-      node.rx = node.ry = 5; // rounded corners
+    const randomNodeName = randomNode().label;
+    const id = `n${counter++}`;
+    graph.setNode(id, {
+      label: id,
+      width: 100,
+      height: 50,
+      rx: 5,
+      ry: 5,
+      classes: "new"
+    });
+    graph.setEdge({
+      v: randomNodeName,
+      w: id,
+      name: id,
+      minlen: 2
+      // weight
     });
 
-    const render = new dagreD3.render();
+    const view = d3.select("svg > g");
+    this.renderGraph(view);
 
-    const view = d3.select("svg")
-      .call(zoom)
-      .append("g")
-      .attr("width", "100%")
-      .attr("height", "100%");
+    view
+      .selectAll("g.node")
+      .filter(nodeDatum => nodeDatum === id)
+      .classed("new", true);
+    view
+      .selectAll("g.edgePath")
+      .filter(({ v, w }) => v === id || w === id)
+      .classed("new", true);
+
+    console.log("addNode", `${randomNodeName} -> ${id}`);
+  }
+
+  renderGraph(view) {
+    const render = new dagreD3.render();
 
     render(view, graph);
 
@@ -78,6 +116,17 @@ class D3Dagre extends Component {
       node.classed(SELECTED_CLASS, toggledSelection);
       nodeEdges.classed(SELECTED_CLASS, toggledSelection);
     });
+  }
+
+  componentDidMount() {
+    const view = d3
+      .select("svg")
+      .call(zoom)
+      .append("g")
+      .attr("width", "100%")
+      .attr("height", "100%");
+
+    this.renderGraph(view);
   }
 
   render() {

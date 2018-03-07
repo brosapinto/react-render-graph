@@ -24,3 +24,9 @@ text {
 .edgePath.selected marker {
   stroke: green;
 }
+
+.new rect,
+.new path,
+new {
+  stroke: orangered;
+}
