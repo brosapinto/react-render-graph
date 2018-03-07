@@ -18,3 +18,9 @@ text {
   stroke: #333;
   stroke-width: 1.5px;
 }
+
+.node.selected rect,
+.edgePath.selected path,
+.edgePath.selected marker {
+  stroke: green;
+}
