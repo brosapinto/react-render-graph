@@ -44,7 +44,6 @@ class D3Dagre extends Component {
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
     this.addNode = this.addNode.bind(this);
-    this.removeNode = this.removeNode.bind(this);
   }
 
   zoomIn() {
@@ -57,7 +56,6 @@ class D3Dagre extends Component {
     zoom.scaleBy(svg, 0.9);
   }
 
-  removeNode() {}
   addNode() {
     const randomNodeName = randomNode().label;
     const id = `n${counter++}`;
@@ -97,6 +95,12 @@ class D3Dagre extends Component {
 
     render(view, graph);
 
+    const renderGraphBound = this.renderGraph.bind(this, view);
+    view.selectAll("g.node").on("contextmenu", function(nodeDatum) {
+      d3.event.preventDefault();
+      graph.removeNode(nodeDatum);
+      renderGraphBound();
+    });
     view.selectAll("g.node").on("click", function(nodeDatum) {
       // https://github.com/d3/d3-selection/blob/master/README.md#selection_on
       // d3.event - raw event
