@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { default as Graph, Node } from "react-json-graph";
-import dagre from "dagre";
-import graphFactory from "./graph-factory";
 import GraphToolbar from "./GraphToolbar";
+import graphFactory from "./graph-factory";
+import { pipe } from "./fn-utils";
+import { setNode, setEdge, calcLayout } from "./graph-utils";
 
 class MyGraph extends Graph {
   renderNode(node) {
@@ -49,7 +50,12 @@ class MyNode extends Node {
         ref={element => {
           this.element = element;
         }}
-        onMouseDown={event => {}}
+        onClick={() =>
+          console.log(
+            `clicked on ID %c${this.props.id}`,
+            "color:red;font-weight:bold"
+          )
+        }
       >
         {this.renderContainer({ isDragging: false, content: label })}
       </div>
@@ -65,63 +71,46 @@ class ReactGraph extends Component {
   };
 
   /**
-   * From Dagre Nodes to ReactJSONGraph nodes
-   * @param {Object} graph Dagre graph instance
-   * @returns {Array} List of nodes -- [{id, label, position: {x, y}, ...}]
+   * @param {Graph} graph Dagre graph instance
+   * @returns {Object} -- {nodes: [{id, label, position, width, height}, ...], edges: [{source, targer}, ...]}
    */
-  static convertNodes = graph => {
-    const nodes = graph.nodes();
-
-    return nodes
+  static convertGraph = graph => {
+    const nodes = graph
+      .nodes()
       .map(id => ({ id, ...graph.node(id) }))
-      .map(({ id, label, x, y, width, height }) => ({
-        id,
-        label,
-        width,
-        height,
-        position: { x, y }
-      }));
+      .map(node => ({ ...node, position: { x: node.y, y: node.y } }));
+
+    const edges = graph
+      .edges()
+      .map(({ v: source, w: target }) => ({ source, target }));
+
+    return { nodes, edges };
   };
 
-  /**
-   * From Dagre Edges to ReactJSONGraph edges
-   * @param {Array} edges List of Dagre edges
-   * @returns {Array} List of edges -- [{source, target}, ...]
-   */
-  static convertEdges = edges =>
-    edges.map(({ v: source, w: target }) => ({ source, target }));
-
   componentDidMount() {
-    dagre.layout(this.graph);
-
-    // convert nodes and edges to something
-    this.setState({
-      nodes: ReactGraph.convertNodes(this.graph),
-      edges: ReactGraph.convertEdges(this.graph.edges())
-    });
+    // get a graph, calculate the layout and convert it for ReactGraph
+    const state = pipe(calcLayout, ReactGraph.convertGraph)(graphFactory());
+    this.setState({ ...state });
   }
 
   addNode() {
     const randomInt = (min, max) =>
       Math.floor(Math.random() * (max - min) + min);
 
+    // randomly create a new node and connection
     const nodes = this.graph.nodes();
     const parentNodeId = nodes[randomInt(1, nodes.length)];
     const randomId = parentNodeId + String.fromCharCode(randomInt(65, 90));
 
-    this.graph
-      .setNode(randomId, {
-        label: randomId,
-        width: 160,
-        height: 36
-      })
-      .setEdge(parentNodeId, randomId);
-    dagre.layout(this.graph);
+    // update graph, calc layout and convert it for ReactGraph
+    const state = pipe(
+      setNode({ id: randomId, label: randomId, width: 160, height: 36 }),
+      setEdge(parentNodeId, randomId),
+      calcLayout,
+      ReactGraph.convertGraph
+    )(this.graph);
 
-    this.setState({
-      nodes: ReactGraph.convertNodes(this.graph),
-      edges: ReactGraph.convertEdges(this.graph.edges())
-    });
+    this.setState({ ...state });
   }
 
   render() {
