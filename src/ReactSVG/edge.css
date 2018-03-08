@@ -1,0 +1,27 @@
+.edge .inner-line,
+.edge .outer-line {
+    fill: none;
+}
+.edge .inner-line {
+    stroke:rgba(170, 170, 170, 0.8); 
+    stroke-width: 4px;
+}
+
+.edge .outer-line {
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 6px;
+}
+
+.edge .line-end {
+    stroke: rgba(170, 170, 170, 0.7);
+    stroke-width: 2px;
+    fill: rgba(255, 255, 255, 1);
+}
+
+.edge.focus .inner-line {
+    stroke: rgb(36, 110, 210);
+}
+
+.edge.focus .line-end {
+    stroke: rgb(36, 110, 210);
+}
