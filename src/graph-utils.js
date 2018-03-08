@@ -14,7 +14,9 @@ export const setNode = curry((node, graph) => graph.setNode(node.id, node));
  * @param {Graph} graph Dagre graph instance
  * @returns {Graph} Dagre graph instance with new connection
  */
-export const setEdge = curry((orig, dest, graph) => graph.setEdge(orig, dest));
+//.setEdge({ v: "A", w: "B", name: "x", minlen: 2 })
+//export const setEdge = curry((orig, dest, graph) => graph.setEdge(orig, dest));
+export const setEdge = curry((edge, graph) => graph.setEdge(edge));
 
 /**
  * Calculate the layout of a graph

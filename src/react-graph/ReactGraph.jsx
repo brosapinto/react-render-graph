@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { default as Graph, Node } from "react-json-graph";
 import GraphToolbar from "../GraphToolbar";
 import graphFactory from "../graph-factory";
-import { pipe } from "./fn-utils";
-import { setNode, setEdge, calcLayout } from "./graph-utils";
+import { pipe } from "../fn-utils";
+import { setNode, setEdge, calcLayout } from "../graph-utils";
 
 class MyGraph extends Graph {
   renderNode(node) {
@@ -104,8 +104,8 @@ class ReactGraph extends Component {
 
     // update graph, calc layout and convert it for ReactGraph
     const state = pipe(
-      setNode({ id: randomId, label: randomId, width: 160, height: 36 }),
-      setEdge(parentNodeId, randomId),
+      setNode({ id: randomId, label: randomId, width: 250, height: 90 }),
+      setEdge({ v: parentNodeId, w: randomId, name: "x", minlen: 2 }),
       calcLayout,
       ReactGraph.convertGraph
     )(this.graph);
