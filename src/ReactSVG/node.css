@@ -1,0 +1,29 @@
+.node .box {
+    stroke: rgb(36, 110, 210);
+    height: 90px;
+    width: 250px;
+    stroke-width: 1px;
+    fill: #ffffff;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.node .icon {
+    transform: matrix(1,0,0,1,0,0) ;
+    font-size: 22px;
+    fill: #AF84A3;
+}
+
+.node .name {
+    font-size: 14px;
+    fill: #AAAAAA;
+}
+
+.node .description {
+    font-size: 20px;
+    fill: #222222;
+}
+
+.node.focus .box {
+    stroke-width: 4px;
+    stroke: rgb(36, 110, 210)
+}
