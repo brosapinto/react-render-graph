@@ -11,6 +11,7 @@ function toCytoscapeNode(id, dagreNode, classes) {
     // locked: true,
     selected: false, // whether the element is selected (default false)
     selectable: true, // whether the selection state is mutable (default true)
+    // autounselectify: false, // Whether nodes should be unselectified
 
     // data: { weight: 75 },
     // data: { id, width: node.width, height: node.height },
@@ -34,16 +35,25 @@ function toCytoscapeEdge(dagreEdge, classes) {
   };
 }
 
+const graph = graphFactory();
+dagre.layout(graph);
+const randomInt = max => Math.floor(Math.random() * max);
+const randomNode = () => {
+  const nodes = graph.nodes();
+  const randomIdx = randomInt(nodes.length);
+  const randomNodeName = nodes[randomIdx];
+  return graph.node(randomNodeName);
+};
+
+let counter = 0;
+
 class Cytoscape extends Component {
   state = {
-    counter: 0,
-    graph: null,
     cy: null
   };
 
   constructor() {
     super();
-    this.state.graph = graphFactory();
     this.addNode = this.addNode.bind(this);
     this.removeNode = this.removeNode.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
@@ -74,9 +84,8 @@ class Cytoscape extends Component {
   }
 
   addNode() {
-    const { graph, cy, counter } = this.state;
+    const { cy } = this.state;
     const nodeId = `e${counter}`;
-    this.setState({ counter: counter + 1 });
 
     graph.setNode(nodeId, {
       label: nodeId,
@@ -84,16 +93,9 @@ class Cytoscape extends Component {
       height: 50
     });
     graph.setEdge({
-      v: "icceoch",
+      v: randomNode().label,
       w: nodeId,
-      name: "new",
-      minlen: 2
-      // weight
-    });
-    graph.setEdge({
-      v: nodeId,
-      w: "ieme",
-      name: "new",
+      name: `e${counter}`,
       minlen: 2
       // weight
     });
@@ -118,10 +120,12 @@ class Cytoscape extends Component {
       .filter(e => e.v === nodeId || e.w === nodeId)
       .forEach(edge => cy.add(toCytoscapeEdge(edge, "new")));
     cy.endBatch();
+
+    counter++;
   }
 
   removeNode(evt) {
-    const { graph, cy, counter } = this.state;
+    const { cy } = this.state;
     const cytoscapeNode = evt.target;
     const nodeId = cytoscapeNode.id();
 
@@ -153,9 +157,6 @@ class Cytoscape extends Component {
   }
 
   componentDidMount() {
-    const { graph } = this.state;
-    dagre.layout(graph);
-
     const cy = cytoscape({
       container: document.getElementById("canvas"),
 
@@ -186,7 +187,7 @@ class Cytoscape extends Component {
         {
           selector: "node.new",
           style: {
-            "border-color": "yellow"
+            "border-color": "orangered"
           }
         },
         {
@@ -216,8 +217,8 @@ class Cytoscape extends Component {
         {
           selector: "edge.new",
           style: {
-            "line-color": "yellow",
-            "target-arrow-color": "yellow"
+            "line-color": "orangered",
+            "target-arrow-color": "orangered"
           }
         },
         {
