@@ -7,7 +7,7 @@ import GraphToolbar from "../GraphToolbar";
 
 import DataAdapter from "./DataAdapter";
 
-import graphFactory from "./graph-factory";
+import graphFactory from "../graph-factory";
 
 const nodeMap = (nodeData, index) => {
   const node = graph.node(nodeData);

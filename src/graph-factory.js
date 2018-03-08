@@ -37,8 +37,8 @@ const graphFactory = () => {
   steps.forEach(s => {
     graph.setNode(s.id, {
       label: s.id,
-      width: 100,
-      height: 50
+      width: 250,
+      height: 90
     });
   });
 
