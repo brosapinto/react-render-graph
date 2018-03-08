@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { default as Graph, Node } from "react-json-graph";
 import dagre from "dagre";
 import graphFactory from "./graph-factory";
+import GraphToolbar from "./GraphToolbar";
 
 class MyGraph extends Graph {
   renderNode(node) {
@@ -128,7 +129,7 @@ class ReactGraph extends Component {
 
     return (
       <React.Fragment>
-        <button onClick={() => this.addNode()}>Add Node</button>
+        <GraphToolbar addNode={() => this.addNode()} />
         <MyGraph
           width={1200}
           height={900}

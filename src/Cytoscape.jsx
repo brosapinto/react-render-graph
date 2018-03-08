@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import cytoscape from "cytoscape";
 import graphFactory from "./graph-factory";
 import dagre from "dagre";
+import GraphToolbar from "./GraphToolbar";
 
 function toCytoscapeNode(id, dagreNode, classes) {
   const { x, y, label, width, height } = dagreNode;
@@ -284,18 +285,11 @@ class Cytoscape extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="actions">
-          <a className="action" onClick={this.addNode}>
-            Add Node
-          </a>
-          <span>|</span>
-          <a className="action" onClick={this.zoomIn}>
-            Zoom In
-          </a>
-          <a className="action" onClick={this.zoomOut}>
-            Zoom Out
-          </a>
-        </div>
+        <GraphToolbar
+          addNode={this.addNode}
+          zoomIn={this.zoomIn}
+          zoomOut={this.zoomOut}
+        />
         <div style={{ height: "750px", width: "1200px" }} id="canvas" />;
       </React.Fragment>
     );

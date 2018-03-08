@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import dagreD3 from "dagre-d3";
 import graphFactory from "./graph-factory";
+import GraphToolbar from "./GraphToolbar";
 import "./D3Dagre.css";
 
 const SELECTED_CLASS = "selected";
@@ -136,18 +137,11 @@ class D3Dagre extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="actions">
-          <a className="action" onClick={this.addNode}>
-            Add Node
-          </a>
-          <span>|</span>
-          <a className="action" onClick={this.zoomIn}>
-            Zoom In
-          </a>
-          <a className="action" onClick={this.zoomOut}>
-            Zoom Out
-          </a>
-        </div>
+        <GraphToolbar
+          addNode={this.addNode}
+          zoomIn={this.zoomIn}
+          zoomOut={this.zoomOut}
+        />
         <svg
           style={{
             margin: "auto",

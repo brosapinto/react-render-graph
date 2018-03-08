@@ -46,12 +46,10 @@
   line-height: 30px;
   border-bottom: 1px solid #ccc;
 }
-.actions > * {
-  line-height: 30px;
-  margin-right: 20px;
-}
-.actions > a {
-  text-decoration: none;
+
+.actions > .action {
+  margin: 0 10px;
   font-weight: bold;
   color: #222;
+  cursor: pointer;
 }
