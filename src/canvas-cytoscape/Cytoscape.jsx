@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import cytoscape from "cytoscape";
-import graphFactory from "./graph-factory";
 import dagre from "dagre";
-import GraphToolbar from "./GraphToolbar";
+import graphFactory from "../graph-factory";
+import GraphToolbar from "../GraphToolbar";
 
 function toCytoscapeNode(id, dagreNode, classes) {
   const { x, y, label, width, height } = dagreNode;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { default as Graph, Node } from "react-json-graph";
-import GraphToolbar from "./GraphToolbar";
-import graphFactory from "./graph-factory";
+import GraphToolbar from "../GraphToolbar";
+import graphFactory from "../graph-factory";
 import { pipe } from "./fn-utils";
 import { setNode, setEdge, calcLayout } from "./graph-utils";
 

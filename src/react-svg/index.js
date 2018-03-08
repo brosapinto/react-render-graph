@@ -5,19 +5,19 @@ import Node from "./Node";
 import Edge from "./Edge";
 import GraphToolbar from "../GraphToolbar";
 
-import DataAdapter from "./DataAdapter";
+import { convertNode, convertEdge } from "./data-adapter";
 
 import graphFactory from "../graph-factory";
 
 const nodeMap = (nodeData, index) => {
   const node = graph.node(nodeData);
-  return <Node key={index} {...DataAdapter.convertNode(node)} />;
+  return <Node key={index} {...convertNode(node)} />;
 };
 
 const edgeMap = (edgeData, index) => {
   const points = graph.edge(edgeData);
 
-  return <Edge key={index} {...DataAdapter.convertEdge(edgeData, points)} />;
+  return <Edge key={index} {...convertEdge(edgeData, points)} />;
 };
 
 const graph = graphFactory();

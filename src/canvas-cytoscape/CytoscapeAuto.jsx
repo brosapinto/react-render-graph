@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import cytoscape from "cytoscape";
-import graphFactory from "./graph-factory";
+import graphFactory from "../graph-factory";
 import cytoscapeDagre from "cytoscape-dagre";
 import dagre from "dagre";
 

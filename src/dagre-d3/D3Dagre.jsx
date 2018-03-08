@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import dagreD3 from "dagre-d3";
-import graphFactory from "./graph-factory";
-import GraphToolbar from "./GraphToolbar";
+import graphFactory from "../graph-factory";
+import GraphToolbar from "../GraphToolbar";
 import "./D3Dagre.css";
 
 const SELECTED_CLASS = "selected";

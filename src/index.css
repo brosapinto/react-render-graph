@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
 }
@@ -9,11 +10,69 @@ body {
   font-family: sans-serif;
 }
 
-#root, .App, .content {
+#root,
+.App,
+.content {
   height: 100%;
   width: 100%;
 }
 
 .content {
   height: 85%;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 80px;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navigation {
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  background: #f3f3f3;
+  border-bottom: 1px solid #ccc;
+  /* margin-bottom: 20px; */
+}
+
+.navigation > a {
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #222;
+}
+
+.navigation > a.active {
+  color: #1684a0;
+}
+
+.actions {
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.actions > button {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #222;
+  cursor: pointer;
 }
