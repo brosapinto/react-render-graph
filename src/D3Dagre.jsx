@@ -6,7 +6,42 @@ import "./D3Dagre.css";
 
 const SELECTED_CLASS = "selected";
 
+const zoom = d3
+  .zoom()
+  .scaleExtent([0, 4])
+  .on("zoom", function() {
+    const { target, transform } = d3.event;
+    const svg = d3.select(this);
+    const element = svg.select("g");
+
+    element.attr(
+      "transform",
+      `translate(${transform.x}, ${transform.y}) scale(${transform.k})`
+    );
+  });
+
 class D3Dagre extends Component {
+  constructor() {
+    super();
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
+    this.addNode = this.addNode.bind(this);
+  }
+
+  zoomIn() {
+    const svg = d3.select("svg");
+    zoom.scaleBy(svg, 1.1);
+  }
+
+  zoomOut() {
+    const svg = d3.select("svg");
+    zoom.scaleBy(svg, 0.9);
+  }
+
+  addNode() {
+    console.log("addNode");
+  }
+
   componentDidMount() {
     const graph = graphFactory();
     graph.nodes().forEach(id => {
@@ -16,19 +51,15 @@ class D3Dagre extends Component {
 
     const render = new dagreD3.render();
 
-    const svg = d3
-      .select(document.getElementById("canvas"))
-      .append("svg")
+    const view = d3.select("svg")
+      .call(zoom)
+      .append("g")
       .attr("width", "100%")
-      .attr("height", "100%")
-      .call(
-        d3.zoom().on("zoom", () => svg.attr("transform", d3.event.transform))
-      )
-      .append("g");
+      .attr("height", "100%");
 
-    render(svg, graph);
+    render(view, graph);
 
-    svg.selectAll("g.node").on("click", function(nodeDatum) {
+    view.selectAll("g.node").on("click", function(nodeDatum) {
       // https://github.com/d3/d3-selection/blob/master/README.md#selection_on
       // d3.event - raw event
 
@@ -38,7 +69,7 @@ class D3Dagre extends Component {
       const node = d3.select(this);
       const toggledSelection = !node.classed(SELECTED_CLASS);
 
-      const nodeEdges = svg.selectAll("g.edgePath").filter(edgeDatum => {
+      const nodeEdges = view.selectAll("g.edgePath").filter(edgeDatum => {
         // https://github.com/d3/d3-selection/blob/master/README.md#selection_filter
         const { v, w } = edgeDatum; // v, w, name
         return v === nodeId || w === nodeId;
@@ -47,11 +78,33 @@ class D3Dagre extends Component {
       node.classed(SELECTED_CLASS, toggledSelection);
       nodeEdges.classed(SELECTED_CLASS, toggledSelection);
     });
-    // svg.selectAll("g.edgePath").on("click", function(datum, index, groupNodes) {
   }
 
   render() {
-    return <div style={{ height: "750px", width: "750px" }} id="canvas" />;
+    return (
+      <React.Fragment>
+        <div className="actions">
+          <a className="action" onClick={this.addNode}>
+            Add Node
+          </a>
+          <span>|</span>
+          <a className="action" onClick={this.zoomIn}>
+            Zoom In
+          </a>
+          <a className="action" onClick={this.zoomOut}>
+            Zoom Out
+          </a>
+        </div>
+        <svg
+          style={{
+            margin: "auto",
+            display: "block",
+            height: "750px",
+            width: "750px"
+          }}
+        />
+      </React.Fragment>
+    );
   }
 }
 
