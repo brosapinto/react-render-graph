@@ -50,6 +50,10 @@ class Edge extends React.Component {
         }, '');
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.toggle !== nextState.toggle;
+    }
+
     render() {
         const { name, points } = this.props;
         const initPoint = points[0];

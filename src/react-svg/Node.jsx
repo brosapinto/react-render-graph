@@ -32,6 +32,10 @@ class Node extends React.Component {
         return toggle ? 'node focus' : 'node';
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.toggle !== nextState.toggle;
+    }
+
     render() {
         const { icon, name, description } = this.props;
         const {x, y} = this.state;
