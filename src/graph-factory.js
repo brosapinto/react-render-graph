@@ -26,7 +26,7 @@ const graphFactory = () => {
       // ranksep: 70
     })
     .setDefaultEdgeLabel(() => ({}));
-
+  /* 
   const origGraph = ex;
   // const origGraph = ix;
   // const origGraph = sr;
@@ -53,7 +53,7 @@ const graphFactory = () => {
         // weight
       });
     });
-  });
+  }); */
 
   // graph
   // .setNode("A", { label: "AAAAA", width: 160, height: 36 })
@@ -137,22 +137,23 @@ const graphFactory = () => {
   // .setEdge("n13", "n14")
   // .setEdge("n13", "n15");
 
-  // .setNode("A", { label: "A", width: 160, height: 36 })
-  // .setNode("C", { label: "C", width: 160, height: 36 })
-  // .setNode("B", { label: "B", width: 160, height: 36 })
-  // .setNode("D", { label: "D", width: 160, height: 36 })
-  // .setNode("E", { label: "E", width: 160, height: 36 })
-  // .setNode("F", { label: "F", width: 160, height: 36 })
-  // .setNode("G", { label: "G", width: 160, height: 36 })
-  // .setNode("H", { label: "H", width: 160, height: 36 })
-  // .setEdge("A", "B")
-  // .setEdge("A", "C")
-  // .setEdge("B", "G")
-  // .setEdge("B", "H")
-  // .setEdge("C", "D")
-  // .setEdge("C", "E")
-  // .setEdge("E", "F")
-  // .setEdge("E", "A");
+  graph
+    .setNode("A", { label: "A", width: 250, height: 90 })
+    .setNode("C", { label: "C", width: 250, height: 90 })
+    .setNode("B", { label: "B", width: 250, height: 90 })
+    .setNode("D", { label: "D", width: 250, height: 90 })
+    .setNode("E", { label: "E", width: 250, height: 90 })
+    .setNode("F", { label: "F", width: 250, height: 90 })
+    .setNode("G", { label: "G", width: 250, height: 90 })
+    .setNode("H", { label: "H", width: 250, height: 90 })
+    .setEdge({ v: "A", w: "B", name: "x", minlen: 2 })
+    .setEdge({ v: "A", w: "C", name: "x", minlen: 2 })
+    .setEdge({ v: "B", w: "G", name: "x", minlen: 2 })
+    .setEdge({ v: "B", w: "H", name: "x", minlen: 2 })
+    .setEdge({ v: "C", w: "D", name: "x", minlen: 2 })
+    .setEdge({ v: "C", w: "E", name: "x", minlen: 2 })
+    .setEdge({ v: "E", w: "F", name: "x", minlen: 2 })
+    .setEdge({ v: "E", w: "A", name: "x", minlen: 2 });
 
   return graph;
 };

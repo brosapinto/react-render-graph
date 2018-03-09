@@ -1,27 +1,13 @@
 import React from "react";
-import dagre from "dagre";
 
 import Node from "./Node";
 import Edge from "./Edge";
 import GraphToolbar from "../GraphToolbar";
 
-import { convertNode, convertEdge } from "./data-adapter";
-
 import graphFactory from "../graph-factory";
-
-const nodeMap = (nodeData, index) => {
-  const node = graph.node(nodeData);
-  return <Node key={index} {...convertNode(node)} />;
-};
-
-const edgeMap = (edgeData, index) => {
-  const points = graph.edge(edgeData);
-
-  return <Edge key={index} {...convertEdge(edgeData, points)} />;
-};
-
-const graph = graphFactory();
-const layout = dagre.layout(graph);
+import { convertNode, convertEdge } from "./data-adapter";
+import { pipe } from "../fn-utils";
+import { setNode, setEdge, calcLayout } from "../graph-utils";
 
 let initialPoint = {
   x: 0,
@@ -30,34 +16,66 @@ let initialPoint = {
 };
 
 class ReactSVG extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    scale: 1,
+    x: 0,
+    y: 0,
+    nodes: [],
+    edges: []
+  };
 
-    this.state = {
-      scale: 1,
-      x: 0,
-      y: 0
-    };
+  static convertGraph(graph) {
+    const nodes = graph
+      .nodes()
+      .map(nId => graph.node(nId))
+      .map(convertNode);
 
-    this.onMouseDownHandler = this.onMouseDownHandler.bind(this);
-    this.onMouseMoveHandler = this.onMouseMoveHandler.bind(this);
-    this.onMouseUpHandler = this.onMouseUpHandler.bind(this);
+    const edges = graph
+      .edges()
+      .map(edge => convertEdge(edge, graph.edge(edge)));
 
-    this.zoomInHandler = this.zoomInHandler.bind(this);
-    this.zoomResetHandler = this.zoomResetHandler.bind(this);
-    this.zoomOutHandler = this.zoomOutHandler.bind(this);
+    return { nodes, edges };
+  }
+
+  componentDidMount() {
+    this.graph = graphFactory();
+    const state = pipe(calcLayout, ReactSVG.convertGraph)(this.graph);
+
+    this.setState({ ...state });
+  }
+
+  addNode() {
+    const randomInt = (min, max) =>
+      Math.floor(Math.random() * (max - min) + min);
+
+    // randomly create a new node and connection
+    const nodes = this.graph.nodes();
+    const parentNodeId = nodes[randomInt(1, nodes.length)];
+    const randomId = parentNodeId + String.fromCharCode(randomInt(65, 90));
+
+    // update graph, calc layout and convert it for ReactGraph
+    const state = pipe(
+      setNode({ id: randomId, label: randomId, width: 160, height: 36 }),
+      setEdge({ v: parentNodeId, w: randomId, name: "x", minlen: 2 }),
+      calcLayout,
+      ReactSVG.convertGraph
+    )(this.graph);
+
+    this.setState({ ...state });
   }
 
   // Move
   onMouseDownHandler(event) {
+    event.stopPropagation();
+
     initialPoint.x = event.pageX;
     initialPoint.y = event.pageY;
     initialPoint.triggerMove = true;
-
-    event.stopPropagation();
   }
 
   onMouseMoveHandler(event) {
+    event.stopPropagation();
+
     const { triggerMove } = this.state;
     if (initialPoint.triggerMove) {
       const x = event.pageX - initialPoint.x;
@@ -72,17 +90,15 @@ class ReactSVG extends React.Component {
           y: prev.y + y
         };
       });
-
-      event.stopPropagation();
     }
   }
 
   onMouseUpHandler(event) {
+    event.stopPropagation();
+
     initialPoint.x = 0;
     initialPoint.y = 0;
     initialPoint.triggerMove = false;
-
-    event.stopPropagation();
   }
 
   // Zoom
@@ -97,9 +113,7 @@ class ReactSVG extends React.Component {
   zoomResetHandler(event) {
     event.stopPropagation();
 
-    this.setState(prev => ({
-      scale: 1
-    }));
+    this.setState(prev => ({ scale: 1 }));
   }
 
   zoomOutHandler(event) {
@@ -111,14 +125,15 @@ class ReactSVG extends React.Component {
   }
 
   render() {
-    const { x, y, scale } = this.state;
+    const { x, y, scale, nodes, edges } = this.state;
 
     return (
       <React.Fragment>
         <GraphToolbar
-          zoomIn={this.zoomInHandler}
-          zoomOut={this.zoomOutHandler}
-          reset={this.zoomResetHandler}
+          addNode={() => this.addNode()}
+          zoomIn={e => this.zoomInHandler(e)}
+          zoomOut={e => this.zoomOutHandler(e)}
+          reset={e => this.zoomResetHandler(e)}
         />
         <div
           style={{
@@ -130,13 +145,13 @@ class ReactSVG extends React.Component {
           <svg
             width="100%"
             height="100%"
-            onMouseDown={this.onMouseDownHandler}
-            onMouseUp={this.onMouseUpHandler}
-            onMouseMove={this.onMouseMoveHandler}
+            onMouseDown={e => this.onMouseDownHandler(e)}
+            onMouseUp={e => this.onMouseUpHandler(e)}
+            onMouseMove={e => this.onMouseMoveHandler(e)}
           >
             <g transform={`translate(${x}, ${y}) scale(${scale})`}>
-              {graph.nodes().map(nodeMap)}
-              {graph.edges().map(edgeMap)}
+              {nodes.map((node, index) => <Node key={index} {...node} />)}
+              {edges.map((edge, index) => <Edge key={index} {...edge} />)}
             </g>
           </svg>
         </div>
