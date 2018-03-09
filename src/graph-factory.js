@@ -26,7 +26,7 @@ const graphFactory = () => {
       // ranksep: 70
     })
     .setDefaultEdgeLabel(() => ({}));
-  /* 
+
   const origGraph = ex;
   // const origGraph = ix;
   // const origGraph = sr;
@@ -53,7 +53,7 @@ const graphFactory = () => {
         // weight
       });
     });
-  }); */
+  });
 
   // graph
   // .setNode("A", { label: "AAAAA", width: 160, height: 36 })
@@ -137,7 +137,7 @@ const graphFactory = () => {
   // .setEdge("n13", "n14")
   // .setEdge("n13", "n15");
 
-  graph
+  /* 
     .setNode("A", { label: "A", width: 250, height: 90 })
     .setNode("C", { label: "C", width: 250, height: 90 })
     .setNode("B", { label: "B", width: 250, height: 90 })
@@ -153,7 +153,7 @@ const graphFactory = () => {
     .setEdge({ v: "C", w: "D", name: "x", minlen: 2 })
     .setEdge({ v: "C", w: "E", name: "x", minlen: 2 })
     .setEdge({ v: "E", w: "F", name: "x", minlen: 2 })
-    .setEdge({ v: "E", w: "A", name: "x", minlen: 2 });
+    .setEdge({ v: "E", w: "A", name: "x", minlen: 2 }); */
 
   return graph;
 };
