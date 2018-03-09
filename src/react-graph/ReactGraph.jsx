@@ -67,7 +67,8 @@ class ReactGraph extends Component {
   graph = graphFactory();
   state = {
     nodes: [],
-    edges: []
+    edges: [],
+    scale: 1
   };
 
   /**
@@ -113,25 +114,52 @@ class ReactGraph extends Component {
     this.setState({ ...state });
   }
 
+  // Zoom
+  zoomInHandler(evt) {
+    evt.stopPropagation();
+    this.setState(prev => ({
+      scale: prev.scale === 0.2 ? prev.scale : prev.scale + prev.scale * 0.1
+    }));
+  }
+
+  zoomResetHandler(event) {
+    event.stopPropagation();
+    this.setState(prev => ({ scale: 1 }));
+  }
+
+  zoomOutHandler(evt) {
+    evt.stopPropagation();
+    this.setState(prev => ({
+      scale: prev.scale === 4 ? prev.scale : prev.scale - prev.scale * 0.1
+    }));
+  }
+
   render() {
-    const { nodes, edges } = this.state;
+    const { nodes, edges, scale } = this.state;
 
     return (
       <React.Fragment>
         <GraphToolbar addNode={() => this.addNode()} />
-        <MyGraph
-          width={1200}
-          height={900}
-          json={{
-            nodes,
-            edges,
-            isStatic: false,
-            isVertical: true,
-            isDirected: true
-          }}
-          onChange={newGraphJSON => {}}
-          Node={MyNode}
-        />
+        <div className="canvas" style={{ overflow: "hidden" }}>
+          <div
+            className="graph"
+            style={{ transform: `translate(0, 0) scale(${scale})` }}
+          >
+            <MyGraph
+              width={1200}
+              height={900}
+              json={{
+                nodes,
+                edges,
+                isStatic: false,
+                isVertical: true,
+                isDirected: true
+              }}
+              onChange={newGraphJSON => {}}
+              Node={MyNode}
+            />
+          </div>
+        </div>
       </React.Fragment>
     );
   }

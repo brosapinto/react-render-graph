@@ -55,7 +55,7 @@ class ReactSVG extends React.Component {
 
     // update graph, calc layout and convert it for ReactGraph
     const state = pipe(
-      setNode({ id: randomId, label: randomId, width: 160, height: 36 }),
+      setNode({ id: randomId, label: randomId, width: 250, height: 90 }),
       setEdge({ v: parentNodeId, w: randomId, name: "x", minlen: 2 }),
       calcLayout,
       ReactSVG.convertGraph
